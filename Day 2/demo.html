@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debounce Demo Page</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; background-color: #f9f9f9; }
+        h2 { text-align: center; color: #333; }
+        .container { display: flex; gap: 30px; margin-top: 30px; }
+        .box { flex: 1; padding: 20px; background: #fff; border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        input { width: 100%; padding: 10px; box-sizing: border-box; margin-top: 10px; border: 1px solid #ccc; border-radius: 4px; }
+        .log { margin-top: 15px; background: #1e1e1e; color: #00ff00; padding: 10px; height: 200px; overflow-y: auto; font-family: monospace; font-size: 13px; border-radius: 4px; }
+    </style>
+</head>
+<body>
+
+    <h2>JavaScript Debounce Performance Demo</h2>
+    
+    <div class="container">
+        <!-- Without Debounce -->
+        <div class="box">
+            <h3>Without Debounce</h3>
+            <p>Fires on <em>every single</em> keystroke instantly.</p>
+            <label>Type quickly:</label>
+            <input type="text" id="normalInput" placeholder="Start typing here...">
+            <div class="log" id="normalLog"></div>
+        </div>
+
+        <!-- With Debounce -->
+        <div class="box">
+            <h3>With Debounce (300ms)</h3>
+            <p>Fires <em>only after</em> you stop typing for 300ms.</p>
+            <label>Type quickly:</label>
+            <input type="text" id="debouncedInput" placeholder="Start typing here...">
+            <div class="log" id="debouncedLog"></div>
+        </div>
+    </div>
+
+    <!-- Load the debounce implementation script -->
+    <script src="debounce.js"></script>
+    <script>
+        // 1. Without Debounce Setup
+        const normalInput = document.getElementById('normalInput');
+        const normalLog = document.getElementById('normalLog');
+        
+        normalInput.addEventListener('input', (e) => {
+            const query = e.target.value;
+            const logItem = document.createElement('div');
+            logItem.textContent = `[Event Fired] Query: "${query}"`;
+            normalLog.appendChild(logItem);
+            normalLog.scrollTop = normalLog.scrollHeight;
+        });
+
+        // 2. With Debounce Setup
+        const debouncedInput = document.getElementById('debouncedInput');
+        const debouncedLog = document.getElementById('debouncedLog');
+
+        const executeSearch = (query) => {
+            const logItem = document.createElement('div');
+            logItem.style.color = "#61afef";
+            logItem.textContent = `[API Request Sent] Processing query: "${query}"`;
+            debouncedLog.appendChild(logItem);
+            debouncedLog.scrollTop = debouncedLog.scrollHeight;
+        };
+
+        // Wrap execution function with debounce (300ms delay)
+        const debouncedSearch = debounce(executeSearch, 300);
+
+        debouncedInput.addEventListener('input', (e) => {
+            debouncedSearch(e.target.value);
+        });
+    </script>
+</body>
+</html>
