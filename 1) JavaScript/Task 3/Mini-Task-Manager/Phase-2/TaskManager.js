@@ -1,7 +1,6 @@
 const Task = require("./Task");
 
 class TaskManager {
-    
     constructor() {
         this.tasks = [];
         this.nextId = 1;

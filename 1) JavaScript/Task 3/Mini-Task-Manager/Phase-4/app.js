@@ -57,8 +57,6 @@ main();
 
 /*
 
-output
-
 Tasks Loaded
 
 Loaded Tasks:

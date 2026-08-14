@@ -70,13 +70,8 @@ class TaskManager {
 
         try {
 
-            // if Real server -> const response = await fetch("/api/tasks");
-
             const tasks =
                 await fetchTasksFromServer();
-            // 1) fetchTasksFromServer() -> returns -> Promise (Pending)
-            // 2) await
-            // 3) return -> Resolved promise / rehected promise
 
             this.tasks = tasks;
 
